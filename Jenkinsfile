@@ -1,4 +1,3 @@
-echo "hello world"
 
 pipeline {
     agent any
@@ -7,7 +6,7 @@ pipeline {
             steps {
             sh "ls"
             git branch:'main', url: 'https://github.com/devopstg76/course3-jenkins-gs-spring-petclinic.git'
-            sh "ls"   
+            sh "ls"
             }
         }
         stage("build") {
@@ -15,7 +14,7 @@ pipeline {
                 sh "./mvnw package"
             }
         }
-        
+
         stage("capture") {
             steps {
             archiveArtifacts '**/target/*.jar'
@@ -23,8 +22,8 @@ pipeline {
             junit '**/target/surefire-reports/TEST*.xml'
             }
         }
-    }    
-    
+    }
+
     post {
         always {
             emailext body: "${env.BUILD_URL}\n${currentBuild.absoluteUrl}",
